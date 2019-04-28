@@ -54,32 +54,32 @@ public:
 		this_thread::sleep_for(chrono::seconds(2));
 	}
 
-	void Think()
+	void Work()
 	{
-		if (take_left_fork())
+		while (true)
 		{
-			if (take_right_fork())
+			if (take_left_fork())
 			{
-				Eat();
-				put_left_fork();
-				put_right_fork();
-				concole_mtx.lock();
-				cout << "Prof " << name << " think. ID " << this_thread::get_id() << endl;
-				concole_mtx.unlock();
-				this_thread::sleep_for(chrono::milliseconds(1000));
-				Think();
+				if (take_right_fork())
+				{
+					Eat();
+					put_left_fork();
+					put_right_fork();
+					concole_mtx.lock();
+					cout << "Prof " << name << " think. ID " << this_thread::get_id() << endl;
+					concole_mtx.unlock();
+					this_thread::sleep_for(chrono::milliseconds(20));
+				}
+				else
+				{
+					put_left_fork();
+					this_thread::sleep_for(chrono::milliseconds(20));
+				}
 			}
 			else
 			{
-				put_left_fork();
-				this_thread::sleep_for(chrono::milliseconds(1000));
-				Think();
+				this_thread::sleep_for(chrono::milliseconds(20));
 			}
-		}
-		else
-		{
-			this_thread::sleep_for(chrono::milliseconds(1000));
-			Think();
 		}
 	}
 };
@@ -96,11 +96,11 @@ int main()
 	MyClass* prof_3 = new MyClass(2);
 	MyClass* prof_4 = new MyClass(3);
 	MyClass* prof_5 = new MyClass(4);
-	thread tr1(&MyClass::Think, prof_1);
-	thread tr2(&MyClass::Think, prof_2);
-	thread tr3(&MyClass::Think, prof_3);
-	thread tr4(&MyClass::Think, prof_4);
-	thread tr5(&MyClass::Think, prof_5);
+	thread tr1(&MyClass::Work, prof_1);
+	thread tr2(&MyClass::Work, prof_2);
+	thread tr3(&MyClass::Work, prof_3);
+	thread tr4(&MyClass::Work, prof_4);
+	thread tr5(&MyClass::Work, prof_5);
 	tr1.join();
 	tr2.join();
 	tr3.join();

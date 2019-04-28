@@ -1,3 +1,2 @@
 ﻿  LAB_4_PROF.cpp
-c:\users\раиль мухамадиев\source\repos\lab_4_prof\lab_4_prof\lab_4_prof.cpp(84): warning C4717: MyClass::Think: рекурсия на всех путях выполнения, функция вызовет переполнение стека
   LAB_4_PROF.vcxproj -> C:\Users\Раиль Мухамадиев\source\repos\LAB_4_PROF\Debug\LAB_4_PROF.exe
